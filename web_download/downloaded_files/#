@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    <meta name="keywords" content="C/C&#x2B;&#x2B;" />
+    <meta name="description" content="前言 有时候我们会遇到在CMD或DOS控制台上出现的加载进度条，虽然不是如网页和软件写的美观。但确确实实也有着自己的特色。而且，一个好看的加载进度条也能增加用户使用控制台程序的体验！所以，拿来研究一下也未尝不可！ 博主，一开始写了个加载进度条的模拟。但是，效果不是很理想！于是，我默默地掏出了度娘.." />
+    <meta property="og:description" content="前言 有时候我们会遇到在CMD或DOS控制台上出现的加载进度条，虽然不是如网页和软件写的美观。但确确实实也有着自己的特色。而且，一个好看的加载进度条也能增加用户使用控制台程序的体验！所以，拿来研究一下也未尝不可！ 博主，一开始写了个加载进度条的模拟。但是，效果不是很理想！于是，我默默地掏出了度娘.." />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>《C/C++实现Console下的加载进度条模拟[美观版]》 - 海之恋SF - 博客园</title>
+    <link rel="canonical" href="https://www.cnblogs.com/seafever/p/12345200.html" />
+    <link rel="shortcut icon" id="favicon" href="//assets.cnblogs.com/favicon.svg?v=2" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=ngA3p3xSWEyR6z38y5XTUENTbk701Hb6MXtpfUdxqzE" />
+    
+
+    
+        <link id="highlighter-theme-cnblogs" type="text/css" rel="stylesheet" href="/css/hljs/cnblogs.css?v=5J1NDtbnnIr2Rc2SdhEMlMxD4l9Eydj88B31E7_NhS4" />
+    <link type="text/css" rel="stylesheet" href="https://www.cnblogs.com/seafever/custom.css?v=&#x2B;WeirJzx9XM8hK9I2SF2joxBSIw=" />
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/css/mobile-common.min.css?v=NjJnIg2ndXmoshSBcUyxF6kOyJTJ44pIM16pEa8vFeU" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/seafever/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/seafever/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/seafever/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 576027;
+        var currentBlogApp = 'seafever';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'BlueSky';
+        var visitorUserId = '';
+        var hasCustomScript = true;
+        window.cb_enable_mathjax = false;
+        window.mathEngine = 0;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false;
+    </script>
+        <script>
+            window.currentPostId = 12345200;
+            window.currentPostDateAdded = '2020-02-22 14:01';
+        </script>
+    <script src="https://assets.cnblogs.com/scripts/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn-www.cnblogs.com/js/blog-common.min.js?v=o7VEZLsl_CV2DTIIqdjNZh0eL90Uf0gKtyBOAARhZ_0"></script>
+        <script>updateCustomBlogReferrer();</script>
+    
+</head>
+<body class="skin-bluesky no-navbar">
+    <a name="top"></a>
+    <div id="top_nav" class="navbar forpc navbar-custom">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                        <img src="//assets.cnblogs.com/logo.svg" alt="博客园Logo" />
+                    </a>
+                </li>
+                <li><a href="https://cnblogs.vip/">会员</a></li>
+                <li><a href="https://cnblogs.vip/store">周边</a></li>
+                    <li><a href="https://www.cnblogs.com/cmt/p/18500368">众包</a></li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a>
+                </li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a>
+                </li>
+                <li><a href="https://www.cnblogs.com/cmt/p/18341478">赞助商</a></li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off" />
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                            <img class="hidden focus-visible" src="//assets.cnblogs.com/icons/enter.svg" alt="搜索" />
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById('zzk_search_input').value)">
+                                <div class="keyword-wrapper">
+                                    <img src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, 'seafever', document.getElementById('zzk_search_input').value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="//assets.cnblogs.com/icons/search.svg" alt="搜索" />
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="//assets.cnblogs.com/icons/message.svg" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="//assets.cnblogs.com/icons/lite-mode-on.svg" alt="简洁模式" />
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="//assets.cnblogs.com/icons/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="page_begin_html">
+        <a href="https://github.com/derek5-seafever" class="github-corner" aria-label="View source on Github" style="position: absolute;top: 0;right: 0;">
+<svg width="80" height="80" viewBox="0 0 250 250" style="fill:#828282; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true">
+<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+<path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+<path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+</svg>
+</a>
+<style>
+.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}
+</style>
+    </div>
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/seafever/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/seafever">SeaYJ</a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/seafever/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E6%B5%B7%E4%B9%8B%E6%81%8BSF">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/seafever/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class = "postTitle">
+                <a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/seafever/p/12345200.html" title="发布于 2020-02-22 14:01">
+    <span role="heading" aria-level="2">《C/C++实现Console下的加载进度条模拟[美观版]》</span>
+    
+
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                <div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+<h1 id="前言">前言</h1>
+<p>  有时候我们会遇到在CMD或DOS控制台上出现的加载进度条，虽然不是如网页和软件写的美观。但确确实实也有着自己的特色。而且，一个好看的加载进度条也能增加用户使用控制台程序的体验！所以，拿来研究一下也未尝不可！<br>
+  博主，一开始写了个加载进度条的模拟。但是，效果不是很理想！于是，我默默地掏出了度娘....<br>
+  What are you 搞啥勒？网上的答案几乎千篇一律，哎~有时候还能看见两篇一模一样的文章作者居然同时标注原创!而且，模拟的效果也不咋滴！<br>
+  没办法，自己动手丰衣足食！还是得我自己来！</p>
+<h2 id="第一次尝试">第一次尝试</h2>
+<p>  这是博主第一次写的进度条，怎么讲呢！两个方块之间的空隙让人看了是真的不爽！<br>
+<img src="https://img2018.cnblogs.com/blog/1933465/202002/1933465-20200222133938937-717552026.png" alt="" loading="lazy"><br>
+  之前见那些控制台应用程序的加载进度条也不是这样的啊！为什么他们写的挺好看的？<br>
+  中间这个方块怎么解决？<br>
+  莫非不是某个字符输出的？这时，我不经意间发现了这个....<br>
+<img src="https://img2018.cnblogs.com/blog/1933465/202002/1933465-20200222134319740-1720292888.png" style="width: 10%"><br>
+  好像被选中的两个字符中间是连续的啊！难道那些应用就是通过选中了那块内容覆盖弄出的吗？好像不对！一来，这样实现似乎比较困难；二来，每次...总之还是比较困难o(////▽////)o....<br>
+  不过....</p>
+<h2 id="第二次尝试">第二次尝试</h2>
+<p>  成了！！！真的可以，如果我们通过改变每个单位位宽的字体颜色和背景颜色一致，那不就实现连续的样式了吗？<br>
+<img src="https://img2018.cnblogs.com/blog/1933465/202002/1933465-20200222135937213-1586421327.gif" alt="" loading="lazy"></p>
+<p>  所以，上代码！</p>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;stdio.h&gt;
+#include &lt;windows.h&gt;
+
+void gotoxy(int x, int y);
+int main()
+{
+	char a[4] = {'|','/','-','\\'};	//存储相关的字符
+	int i, j, x=2, y=1;	//声明变量
+	std::cout &lt;&lt; "*******加载进度条模拟*******" &lt;&lt; std::endl;	//输出顶框
+	putchar('\n');	//为接下来的进度条保留空位
+	std::cout &lt;&lt; "******点赞***+***关注******" &lt;&lt; std::endl;	//输出底框
+	gotoxy(x,y);	//调用函数控制光标位置
+	for (i = 0;i &lt;= 100;i++) {	//进度条总进度控制
+		std::cout &lt;&lt; " [";	//进度条左边框
+		for (j = 0;j &lt; i/10;j++) {	//控制加载进度的显示
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | BACKGROUND_INTENSITY);	//设置加载条样式配置
+			std::cout &lt;&lt; "_";
+		}
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY);	//恢复原配置
+		for (j = 0;j &lt; (10-(i/10));j++) { printf("%c", '.'); }	//未加载进度显示
+		std::cout &lt;&lt; "] ";	//进度条右边框
+		std::cout &lt;&lt; a[i%4] &lt;&lt; "正在加载中";	//显示和程序进行中提示和“正在加载”字样提示
+		for (j = 0;j &lt; (i%4);j++) { std::cout &lt;&lt; "."; }	//实现动态显示
+		for (j = 0;j &lt; (4-i%4);j++) { printf("%c", ' '); }
+		Sleep(100);	//控制程序运行速度
+		putchar('\r');	//回车
+	}
+	std::cout &lt;&lt; "( ゜- ゜)つロBiliBili干杯~\n" &lt;&lt; std::endl;	//防覆盖
+}
+void gotoxy(int x, int y)	//自定义 gotoxy 函数
+{
+	COORD c;
+	c.X = x;c.Y = y;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), c);
+}
+</code></pre>
+<h2 id="总结">总结</h2>
+<ol>
+<li>gotoxy(int x,int y);函数的使用可以极大的增强我们在控制台输入和输出的灵活性；</li>
+<li>BOOL SetConsoleTextAttribute(HANDLE hConsoleOutput, WORD wAttributes);函数的使用，使得控制台样式的多样性得以补充。</li>
+</ol>
+<h2 id="说明">说明</h2>
+<p>本内容首发于BiliBili！为作者本人原创！<br>
+如有转载，请务必注明出处！<br>
+原文章地址：https:////www.cnblogs.com/seafever/p/12345200.html</p>
+
+</div>
+<div class="clear"></div>
+<div id="blog_post_info_block" role="contentinfo">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date" data-last-update-days="1700.4835809534015" data-date-created="BlogServer.Application.Dto.BlogPost.BlogPostDto" data-date-updated="2020-03-07 10:54">2020-02-22 14:01</span>&nbsp;
+<a href="https://www.cnblogs.com/seafever">海之恋SF</a>&nbsp;
+阅读(<span id="post_view_count">2887</span>)&nbsp;
+评论(<span id="post_comment_count">4</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=12345200" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(12345200);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: '', targetType: 'blogPost', targetId: '12345200', targetLink: 'https://www.cnblogs.com/seafever/p/12345200.html', title: '《C/C&#x2B;&#x2B;实现Console下的加载进度条模拟[美观版]》' })">举报</a>
+</div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+<script>
+    var cb_entryId = 12345200, cb_entryCreatedDate = '2020-02-22 14:01', cb_postType = 1, cb_postTitle = '《C/C++实现Console下的加载进度条模拟[美观版]》';
+    var allowComments = true, cb_blogId = 576027, cb_blogApp = 'seafever', cb_blogUserGuid = '0a3e6163-ddde-46e8-360f-08d7a7ab70c7';
+    mermaidRender.render()
+    markdown_highlight()
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");    
+</script>
+<a id="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"> 
+        <div class="comment-nav-right">
+            <span id="span_refresh_tips"></span><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a>
+        </div>
+    </div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+        <div id="cnblogs_ch"></div>
+    <div id="opt_under_post"></div>
+        <div id="blog_c1" class="under-post-card">
+            <a href="https://market.cnblogs.com/" rel="nofollow" target="_blank" onclick="countCreativeClicks('C1-阿里云-云大使')">
+                <img src="https://img2024.cnblogs.com/blog/35695/202410/35695-20241019062048823-95798004.jpg" onload="countCreativeImpressions('C1-阿里云-云大使')" alt="" />
+                <span id="c1_impression" style="display:none"></span>
+            </a>
+        </div>
+    <div id="under_post_card1"></div>
+        <div id="cnblogs_c2" class="under-post-card">
+            <a href="https://www.cnblogs.com/cmt/p/18457617" rel="nofollow" target="_blank" onclick="countCreativeClicks('C2-杭云-华为云代理')">
+                <img src="https://img2024.cnblogs.com/blog/35695/202410/35695-20241011113008248-579795068.jpg" alt="" onload="countCreativeImpressions('C2-杭云-华为云代理')" />
+            </a>
+        </div>
+    <div id="under_post_card2"></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+        var commentManager = new blogCommentManager();
+        commentManager.renderComments(0);
+        fixPostBody();
+        window.footnoteTipManager.generateFootnoteTips();
+
+            window.tocManager.displayDisableTocTips = false;
+            window.tocManager.generateToc();
+            
+                setTimeout(function() { countViews(cb_blogId, cb_entryId); }, 50);
+            
+            deliverT2();
+            deliverC1C2();
+            loadNewsAndKb();
+            
+                LoadPostCategoriesTags(cb_blogId, cb_entryId);
+            
+            LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+            GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+            loadOptUnderPost();
+            GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+                </script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+    </div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2024 海之恋SF
+<br /><span id="poweredby">Powered by .NET 8.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    <div id="page_end_html">
+        <a rel="nofollow noopener"  id="goToTop" href="#top">回到顶部</a>
+<script>
+var toTop = document.getElementById("goToTop");
+setInterval(function(){ 
+    if(document.documentElement.scrollTop >= window.innerHeight ) {
+        toTop.style.display = "block";
+    } else {
+        toTop.style.display = "none";
+    }
+},500);
+</script>
+<script>
+window.onload = function(){//右侧博文推荐
+    var divDigg = document.getElementById("div_digg");
+    var diggShowAll = false;
+    divDigg.onclick = function(){
+        if(!diggShowAll){
+            divDigg.style.height = "auto";
+            divDigg.childNodes[1].onclick=function(){event.stopPropagation();}
+            divDigg.childNodes[3].onclick=function(){event.stopPropagation();}
+        } else {
+            divDigg.style.height = "54px";
+            divDigg.childNodes[1].onclick=function(){}
+            divDigg.childNodes[3].onclick=function(){}
+        }
+        diggShowAll = !diggShowAll;
+    }
+     if(document.documentElement.scrollTop >= window.innerHeight ) {
+        divDigg.style.display = "block";
+    } 
+}
+</script>
+<script src="https://blog-static.cnblogs.com/files/seafever/sakuraPlus.js"></script>
+
+<script>
+L2Dwidget.init({
+"model": {
+jsonPath: "https://unpkg.com/live2dapi@1.0.0/miku/miku.model.json",
+"scale": 1
+},
+"display": {
+"position": "right",
+"width": 93,
+"height": 238,
+"hOffset": -32,
+"vOffset": -85
+},
+"mobile": {
+"show": true,
+"scale": 0.5
+},
+"react": {
+"opacityDefault": 1.0,
+"opacityOnHover": 0.2
+}
+});
+</script>
+<script type="text/javascript" language="javascript">
+　　//Setting ico for MyCnblog
+　　var linkObject = document.createElement('link');
+　　linkObject.rel = "shortcut icon";
+　　linkObject.href = "https://unpkg.com/miku.cursor@5.0.4/top.png";
+       linkObject.type = "image/png";
+　　document.getElementsByTagName("head")[0].appendChild(linkObject);
+</script>
+<script>
+class Circle {
+  constructor({ origin, speed, color, angle, context }) {
+    this.origin = origin
+    this.position = { ...this.origin }
+    this.color = color
+    this.speed = speed
+    this.angle = angle
+    this.context = context
+    this.renderCount = 0
+  }
+
+  draw() {
+    this.context.fillStyle = this.color
+    this.context.beginPath()
+    this.context.arc(this.position.x, this.position.y, 2, 0, Math.PI * 2)
+    this.context.fill()
+  }
+
+  move() {
+    this.position.x = (Math.sin(this.angle) * this.speed) + this.position.x
+    this.position.y = (Math.cos(this.angle) * this.speed) + this.position.y + (this.renderCount * 0.3)
+    this.renderCount++
+  }
+}
+
+class Boom {
+  constructor ({ origin, context, circleCount = 10, area }) {
+    this.origin = origin
+    this.context = context
+    this.circleCount = circleCount
+    this.area = area
+    this.stop = false
+    this.circles = []
+  }
+
+  randomArray(range) {
+    const length = range.length
+    const randomIndex = Math.floor(length * Math.random())
+    return range[randomIndex]
+  }
+
+  randomColor() {
+    const range = ['8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
+    return '#' + this.randomArray(range) + this.randomArray(range) + this.randomArray(range) + this.randomArray(range) + this.randomArray(range) + this.randomArray(range)
+  }
+
+  randomRange(start, end) {
+    return (end - start) * Math.random() + start
+  }
+
+  init() {
+    for(let i = 0; i < this.circleCount; i++) {
+      const circle = new Circle({
+        context: this.context,
+        origin: this.origin,
+        color: this.randomColor(),
+        angle: this.randomRange(Math.PI - 1, Math.PI + 1),
+        speed: this.randomRange(1, 6)
+      })
+      this.circles.push(circle)
+    }
+  }
+
+  move() {
+    this.circles.forEach((circle, index) => {
+      if (circle.position.x > this.area.width || circle.position.y > this.area.height) {
+        return this.circles.splice(index, 1)
+      }
+      circle.move()
+    })
+    if (this.circles.length == 0) {
+      this.stop = true
+    }
+  }
+
+  draw() {
+    this.circles.forEach(circle => circle.draw())
+  }
+}
+
+class CursorSpecialEffects {
+  constructor() {
+    this.computerCanvas = document.createElement('canvas')
+    this.renderCanvas = document.createElement('canvas')
+
+    this.computerContext = this.computerCanvas.getContext('2d-disabled')
+    this.renderContext = this.renderCanvas.getContext('2d-disabled')
+
+    this.globalWidth = window.innerWidth
+    this.globalHeight = window.innerHeight
+
+    this.booms = []
+    this.running = false
+  }
+
+  handleMouseDown(e) {
+    const boom = new Boom({
+      origin: { x: e.clientX, y: e.clientY },
+      context: this.computerContext,
+      area: {
+        width: this.globalWidth,
+        height: this.globalHeight
+      }
+    })
+    boom.init()
+    this.booms.push(boom)
+    this.running || this.run()
+  }
+
+  handlePageHide() {
+    this.booms = []
+    this.running = false
+  }
+
+  init() {
+    const style = this.renderCanvas.style
+    style.position = 'fixed'
+    style.top = style.left = 0
+    style.zIndex = '999999999999999999999999999999999999999999'
+    style.pointerEvents = 'none'
+
+    style.width = this.renderCanvas.width = this.computerCanvas.width = this.globalWidth
+    style.height = this.renderCanvas.height = this.computerCanvas.height = this.globalHeight
+
+    document.body.append(this.renderCanvas)
+
+    window.addEventListener('mousedown', this.handleMouseDown.bind(this))
+    window.addEventListener('pagehide', this.handlePageHide.bind(this))
+  }
+
+  run() {
+    this.running = true
+    if (this.booms.length == 0) {
+      return this.running = false
+    }
+
+    requestAnimationFrame(this.run.bind(this))
+
+    this.computerContext.clearRect(0, 0, this.globalWidth, this.globalHeight)
+    this.renderContext.clearRect(0, 0, this.globalWidth, this.globalHeight)
+
+    this.booms.forEach((boom, index) => {
+      if (boom.stop) {
+        return this.booms.splice(index, 1)
+      }
+      boom.move()
+      boom.draw()
+    })
+    this.renderContext.drawImage(this.computerCanvas, 0, 0, this.globalWidth, this.globalHeight)
+  }
+}
+
+const cursorSpecialEffects = new CursorSpecialEffects()
+cursorSpecialEffects.init()
+</script>
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'o(*//·//▽//·//*)q';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(*≧︶≦))(￣▽￣* )ゞ';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },3000);
+        }
+    });
+})();
+</script><!--
+<script>
+	// 反调试函数,参数：开关，执行代码
+	function endebug(off, code) {
+		if (!off) {
+			!function (e) {
+				function n(e) {
+					function n() {
+						return u
+					}
+					function o() {
+						window.Firebug && window.Firebug.chrome && window.Firebug.chrome.isInitialized ? t("on") : (a = "off", console.log(d), console.clear(), t(a))
+					}
+					function t(e) {
+						u !== e && (u = e, "function" == typeof c.onchange && c.onchange(e))
+					}
+					function r() {
+						l || (l = !0, window.removeEventListener("resize", o), clearInterval(f))
+					}
+					"function" == typeof e && (e = {
+						onchange: e
+					});
+					var i = (e = e || {}).delay || 500,
+						c = {};
+					c.onchange = e.onchange;
+					var a, d = new Image;
+					d.__defineGetter__("id", function () {
+						a = "on"
+					});
+					var u = "unknown";
+					c.getStatus = n;
+					var f = setInterval(o, i);
+					window.addEventListener("resize", o);
+					var l;
+					return c.free = r, c
+				}
+				var o = o || {};
+				o.create = n, "function" == typeof define ? (define.amd || define.cmd) && define(function () {
+					return o
+				}) : "undefined" != typeof module && module.exports ? module.exports = o : window.jdetects = o
+			}(), jdetects.create(function (e) {
+				var a = 0;
+				var n = setInterval(function () {
+					if ("on" == e) {
+						setTimeout(function () {
+							if (a == 0) {
+								a = 1;
+								setTimeout(code);
+							}
+						}, 200)
+					}
+				}, 100)
+			})
+		}
+	}
+</script>
+<script type="text/javascript">
+	endebug(false, function () {
+		// 非法调试执行的代码(不要使用控制台输出的提醒)
+		document.write("检测到非法调试,请关闭后刷新重试!");
+		self.location='https://unpkg.com/debug_seafever@1.0.1/index.html';
+	});
+</script>
+<script type="text/javascript">
+    window.onload = function(){
+        //屏蔽键盘事件
+        document.onkeydown = function (){
+            var e = window.event || arguments[0];
+            //F12
+            if(e.keyCode == 123){
+                return false;
+            //Ctrl+Shift+I
+            }else if((e.ctrlKey) && (e.shiftKey) && (e.keyCode == 73)){
+                return false;
+            //Shift+F10
+            }else if((e.shiftKey) && (e.keyCode == 121)){
+                return false;
+            //Ctrl+U
+            }else if((e.ctrlKey) && (e.keyCode == 85)){
+                return false;
+            //Ctrl+S
+            }else if((e.ctrlKey)&&(e.keyCode == 83)){
+                return false;
+            }
+        };
+        //屏蔽鼠标右键
+        document.oncontextmenu = function (){
+            return false;
+        }
+    }
+</script>-->
+    </div>
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8AOXHS93SCdEnLt5HW8VuxT1ZpCsJbTCaGmqZ7ts0SHD3NsCUbXYIpofqe5eOLknIEJWMkHMY_QL1GPm3OQUVlRBgka7sR6aWjdRVuT57nxHAHrHTpT2QWiiylAVxnLl-nA2-ZruPXFUVxs8cdAw4sY" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M95P3TTWJZ"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-M95P3TTWJZ');
+</script>
+<script defer src="https://hm.baidu.com/hm.js?866c9be12d4a814454792b1fd0fed295"></script>
+</body>
+</html>

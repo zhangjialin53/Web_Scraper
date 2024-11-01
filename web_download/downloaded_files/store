@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh" data-critters-container>
+<head>
+  <meta charset="utf-8">
+  <title>博客园 VIP</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
+  <link rel="preload" as="image" href="/assets/images/logo.svg">
+<style>*,:before,:after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(7 93 179 / .5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }*,:before,:after{box-sizing:border-box;border-width:0;border-style:solid;border-color:#fafafa}:before,:after{--tw-content:""}html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}html{font-family:Smart Quotes,PingFang SC,-apple-system,BlinkMacSystemFont,Helvetica Neue,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;font-size:16px}:root{--current-color:currentcolor}</style><link rel="stylesheet" href="styles-MXRSD5RX.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles-MXRSD5RX.css"></noscript></head>
+<body>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XPE8C2TMTE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+
+  gtag('js', new Date());
+
+  gtag('config', 'G-XPE8C2TMTE');
+</script>
+
+<app-root></app-root>
+<style>
+  #unsupported-browser a {
+    color: #2e7acc;
+    text-decoration: underline;
+  }
+</style>
+<script>
+  var regex = /Edge?\/(1{2}[4-9]|1[2-9]\d|[2-9]\d{2}|\d{4,})(\.\d+|)(\.\d+|)|Firefox\/(1{2}[4-9]|1[2-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Chrom(ium|e)\/(8[4-9]|9\d|\d{3,})\.\d+(\.\d+|)|(Maci|X1{2}).+ Version\/(15\.([6-9]|\d{2,})|(1[6-9]|[2-9]\d|\d{3,})\.\d+)([,.]\d+|)( \(\w+\)|)( Mobile\/\w+|) Safari\/|Chrome.+OPR\/(9{2}|\d{3,})\.\d+\.\d+|(CPU[ +]OS|iPhone[ +]OS|CPU[ +]iPhone|CPU IPhone OS|CPU iPad OS)[ +]+(15[._]([6-9]|\d{2,})|(1[6-9]|[2-9]\d|\d{3,})[._]\d+)([._]\d+|)|Opera Mini|Android:?[ /-](1{2}[89]|1[2-9]\d|[2-9]\d{2}|\d{4,})(\.\d+|)(\.\d+|)|Mobile Safari.+OPR\/(7[3-9]|[89]\d|\d{3,})\.\d+\.\d+|Android.+Firefox\/(1{2}[89]|1[2-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Android.+Chrom(ium|e)\/(1{2}[89]|1[2-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Android.+(UC? ?Browser|UCWEB|U3)[ /]?(15\.([5-9]|\d{2,})|(1[6-9]|[2-9]\d|\d{3,})\.\d+)\.\d+|SamsungBrowser\/(1[89]|[2-9]\d|\d{3,})\.\d+|Android.+MQ{2}Browser\/(13(\.([1-9]|\d{2,})|)|(1[4-9]|[2-9]\d|\d{3,})(\.\d+|))(\.\d+|)|K[Aa][Ii]OS\/(2\.([5-9]|\d{2,})|([3-9]|\d{2,})\.\d+)(\.\d+|)/;
+  if (!regex.test(navigator.userAgent)) {
+    document.body.insertAdjacentHTML(
+      'afterbegin',
+      '<div id="unsupported-browser">您使用的浏览器可能不受支持，您可以 <a href="https://www.cnblogs.com/cmt/articles/17677736.html">点击此处</a> 加企业微信购买 VIP，或者使用新版 <a href="https://www.google.cn/intl/zh-CN/chrome/">Google Chrome</a> / <a href="https://www.microsoft.com/zh-cn/edge">Microsoft Edge</a> / <a href="https://www.mozilla.org/zh-CN/firefox/">Firefox</a> 浏览器 <button class="close" onclick="document.getElementById(\'unsupported-browser\').style.display = \'none\'">×</button></div>'
+    );
+  }
+</script>
+<link rel="modulepreload" href="chunk-KX3PCPTD.js"><link rel="modulepreload" href="chunk-ZBPWDXPD.js"><link rel="modulepreload" href="chunk-FAKOFH7V.js"><link rel="modulepreload" href="chunk-BVMU36AQ.js"><link rel="modulepreload" href="chunk-RCODATNS.js"><link rel="modulepreload" href="chunk-A6ROX3HY.js"><link rel="modulepreload" href="chunk-237RYD27.js"><link rel="modulepreload" href="chunk-HIJ4WURV.js"><link rel="modulepreload" href="chunk-IMREHAWC.js"><script src="polyfills-JQ6HEYCX.js" type="module"></script><script src="main-L34R2KMA.js" type="module"></script></body>
+</html>
